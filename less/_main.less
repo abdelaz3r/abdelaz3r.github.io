@@ -1,0 +1,280 @@
+* {
+	font-family: 'Merriweather', serif;
+	font-weight: @fweight-1;
+	font-size: @fsize-4;
+}
+
+html {
+	margin: 0; padding: 0;
+}
+
+body {
+	margin: 0; padding: 0;
+	overflow-y: scroll;
+}
+
+.header {
+	height: calc(~"50vh + "@header-height / 2);
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: end;
+
+	.logo {
+		display: inline-block;
+		width: 320px; height: 400px;
+		flex: 0 0 auto;
+
+	//	border: solid 1px @stroke;
+	//	border-bottom-color: @primary;
+
+		svg {
+			background: #414141;
+		}
+
+		circle {
+			fill: white;
+		}
+	}
+
+	.title {
+		display: inline-block;
+		width: 320px - @gutter;
+		padding: 0 0 0 @gutter;
+		flex: 0 0 auto;
+
+		h1 {
+			margin: 0; padding: 0;
+			font-size: @fsize-1;
+			line-height: 40px;
+			font-weight: @fweight-2;
+		}
+
+		h2 {
+			margin: 0; padding: 0;
+			font-size: @fsize-2;
+			line-height: 40px;
+		}
+
+		.nav {
+			ul {
+				list-style: none;
+				margin: 30px 0 0 0; padding: 0;
+
+				li {
+					display: inline-block;
+					line-height: @gutter + 1px;
+
+					a {
+						display: inline-block;
+						line-height: @gutter + 1px;
+						padding: 0 15px; margin: 0 1px 0 0;
+
+						font-size: 16px;
+						font-weight: bold;
+						text-decoration: none;
+						color: white;
+
+						background: @primary;
+						transition: all linear @anim-duration;
+
+						&.active, &:hover {
+							background: @secondary;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.content {
+	width: @content-width;
+	margin: 0 auto calc(~"50vh - "@header-height / 2) auto;
+
+	.content-item {
+		position: relative;
+		margin: @gutter 0;
+		display: flex;
+		flex-direction: row-reverse;
+
+		.content-item-part {
+			width: 50%;
+		}
+
+		&:before {
+			content: '';
+			position: absolute;
+			top: -20px; left: 40%; right: 40%;
+			height: 1px;
+
+			background: @stroke;
+		}
+
+		&:first-child:before {
+			display: none;
+		}
+
+		h1.content-item-head {
+			margin: 0; padding: 0 0 0 @gutter;
+			font-size: @fsize-2;
+			line-height: 40px;
+			font-weight: @fweight-2;
+		}
+
+		h2.content-item-head {
+			margin: 0; padding: 0 0 16px @gutter;
+			font-size: @fsize-3;
+			line-height: 20px;
+		}
+
+		.content-item-body {
+			p {
+				margin: 0; padding: 0 0 0 @gutter;
+				line-height: 22px;
+
+				strong {
+					position: relative;
+					display: inline-block;
+					font-weight: @fweight-2;
+					margin-right: 10px;
+
+					&:before {
+						content: '';
+						position: absolute;
+						bottom: 5px; right: -6px;
+						width: 5px; height: 5px;
+						background: @primary;
+						z-index: -1;
+					}
+				}
+
+				a {
+					color: @secondary;
+					text-decoration: none;
+					border-bottom: solid 1px transparent;
+					transition: all linear @anim-duration;
+
+					&:hover, &:focus {
+						border-bottom: solid 2px @primary;
+					}
+				}
+			}
+
+			hr {
+				background: none;
+				border: none;
+				margin: 14px 0 0 0; padding: 0;
+			}
+		}
+
+		.content-item-tail {
+			display: flex;
+			flex-flow: row wrap;
+			justify-content: right;
+
+			.tail-item {
+				position: relative;
+				display: inline-block;
+				width: 98px; height: 98px;
+				margin: 0 0 5px 5px;
+				outline : none;
+				border: solid 1px @stroke;
+			}
+
+			a.tail-item {
+				&:before {
+					content: '';
+					position: absolute;
+					top: -4px; left: -4px;
+					right: 4px; bottom: 4px;
+					z-index: 1;
+					
+					background: @secondary;
+					transition: all linear @anim-duration;
+					opacity: 0;
+				}
+
+				&:hover {
+					&:before {
+						opacity: .6;
+					}
+				}
+			}
+
+			img {
+				display: block;
+				width: 98px; height: 98px;
+				outline : none;
+			}
+		}
+	}
+}
+
+@media screen and (max-width: 1050px) {
+	.container {
+		width: 700px - (@gutter * 2);
+		margin: 0 auto;
+	}
+
+	.content {
+		width: auto;
+		padding: 0;
+	}
+}
+
+@media screen and (max-width: 700px) {
+	.container {
+		width: auto;
+		padding: @gutter;
+	}
+
+	.header {
+		height: auto;
+		display: block;
+
+		.logo {
+			display:-block;
+			width: 100%; height: 60px;
+			margin-bottom: @gutter;
+
+			overflow: hidden;
+		}
+
+		.title {
+			display: block;
+			width: auto; height: auto;
+			padding: 0;
+		}
+	}
+	
+	.content {
+		width: auto;
+		padding: 0;
+
+		.content-item {
+			flex-direction: column;
+
+			&:before {
+				left: 0%; right: 0%;
+			}
+
+			.content-item-part {
+				width: 100%;
+			}
+
+			h1.content-item-head { padding-left: 0; }
+			h2.content-item-head { padding-left: 0; }
+			.content-item-body p { padding-left: 0; }
+
+			.content-item-tail {
+				justify-content: left;
+				padding-top: 16px;
+
+				.tail-item {
+					margin: 5px 5px 0 0;
+				}
+			}
+		}
+	}
+}
