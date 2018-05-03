@@ -103,7 +103,6 @@ Pager = {
 	},
 
 	show: function(target) {
-
 		if (Pager.pages[target] !== undefined && Pager.current !== target) {
 			var $page = Pager.pages[target];
 			var distance = SVGSymbol.$svg.offset().top - window.pageYOffset - 40;
@@ -167,10 +166,12 @@ $(document).ready(function() {
 			type: 'image',
 			closeOnContentClick: true,
 			showCloseBtn: false,
+			gallery: {
+				enabled: true
+			},
 			zoom: {
 				enabled: true,
 				duration: 300,
-				easing: 'ease-in-out',
 				opener: function(openerElement) {
 					return openerElement.is('img') ? openerElement : openerElement.find('img');
 				}

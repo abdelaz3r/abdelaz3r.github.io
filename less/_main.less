@@ -76,7 +76,7 @@ body {
 						transition: all linear @anim-duration;
 
 						&.active, &:hover {
-							background: @secondary;
+							background: @primary-hover;
 						}
 					}
 				}
@@ -139,10 +139,12 @@ body {
 					&:before {
 						content: '';
 						position: absolute;
+						z-index: -1;
 						bottom: 8px; right: -10px;
 						width: 5px; height: 5px;
-						background: @primary;
-						z-index: -1;
+						
+						border-radius: 100%;
+						background: @secondary;
 					}
 				}
 
@@ -180,6 +182,8 @@ body {
 			}
 
 			a.tail-item {
+				background: @secondary;
+
 				&:before {
 					content: '';
 					position: absolute;
@@ -187,7 +191,7 @@ body {
 					right: 4px; bottom: 4px;
 					z-index: 1;
 					
-					background: @secondary;
+					background: @primary-hover;
 					transition: all linear @anim-duration;
 					opacity: 0;
 				}
@@ -197,12 +201,11 @@ body {
 						opacity: .6;
 					}
 				}
-			}
 
-			img {
-				display: block;
-				width: 98px; height: 98px;
-				outline : none;
+				img {
+					display: block;
+					width: 100%; height: 100%;
+				}
 			}
 		}
 	}
