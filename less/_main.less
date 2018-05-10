@@ -21,10 +21,17 @@ body {
 	align-items: end;
 
 	.logo {
+		position: relative;
 		display: inline-block;
 		width: 320px; height: 400px;
 		flex: 0 0 auto;
 		align-self: flex-end;
+
+		.logo-mask {
+			position: absolute;
+			top: 0; left: 0; right: 0; bottom: 0;
+			overflow: hidden;
+		}
 
 		svg {
 			background: #414141;
@@ -41,6 +48,10 @@ body {
 		padding: 0 0 0 @gutter;
 		flex: 0 0 auto;
 		align-self: flex-end;
+
+		& > * {
+			opacity: 0;
+		}
 
 		h1 {
 			margin: 0; padding: 0;

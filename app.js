@@ -148,8 +148,20 @@ Pager = {
 };
 
 $(document).ready(function() {
-	// svg symbole
-	SVGSymbol.init();
+
+	(function() {
+		var $elems = $('.header .title > *');
+
+		$elems.each(function(i, elem) {
+			setTimeout(function() {
+				$(elem).animate({
+					'opacity': 1
+				}, 1000);
+			}, 200 * i);
+		});
+
+		SVGSymbol.init();
+	})();
 
 	// pager system
 	Pager.init();
