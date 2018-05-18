@@ -108,11 +108,12 @@ Pager = {
 			var distance = SVGSymbol.$svg.offset().top - window.pageYOffset - 40;
 
 			Pager.current = target;
+			history.pushState(null, null, '#' + Pager.current);
 
 			if (distance > 0) {
 				$('body, html').animate({
 					scrollTop: SVGSymbol.$svg.offset().top - 40
-				}, 500);
+				}, 1000);
 			}
 
 			$page.css('display', 'block');
@@ -148,6 +149,8 @@ Pager = {
 };
 
 $(document).ready(function() {
+	// pager system
+	Pager.init();
 
 	(function() {
 		var $elems = $('.header .title > *');
@@ -161,10 +164,14 @@ $(document).ready(function() {
 		});
 
 		SVGSymbol.init();
-	})();
 
-	// pager system
-	Pager.init();
+		setTimeout(function() {
+			if (window.location.hash) {
+				var target = window.location.hash.substring(1);
+				Pager.show(target);
+			}
+		}, 800);
+	})();
 
 	$('.nav-button').on('click', function(e) {
 		e.preventDefault();
