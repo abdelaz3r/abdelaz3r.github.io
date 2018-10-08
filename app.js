@@ -26,7 +26,7 @@ SVGSymbol = {
 		SVGSymbol._svg = Snap('#svg');
 		SVGSymbol.draw();
 	},
-
+	
 	draw: function() {
 		SVGSymbol.setSize();
 		SVGSymbol.animate();
@@ -35,7 +35,8 @@ SVGSymbol = {
 	setSize: function() {
 		SVGSymbol.width  = (SVGSymbol.padding * 2) + ((SVGSymbol.struct[0].length - 1) * SVGSymbol.hgap);
 		SVGSymbol.height = (SVGSymbol.padding * 2) + ((SVGSymbol.struct.length - 1) * SVGSymbol.vgap);
-		SVGSymbol.isMobile = false;
+
+		SVGSymbol.isMobile = $(window).width() < 700;
 
 		SVGSymbol.$svg.css({
 			'width': SVGSymbol.width,
@@ -49,41 +50,37 @@ SVGSymbol = {
 			SVGSymbol.task = undefined;
 		}
 
-		if (SVGSymbol.isMobile) {
-			console.log('animation continue');
-		} else {
-			for (var i = 0; i < SVGSymbol.struct.length; i++) {
-				var line = SVGSymbol.struct[i];
-				var yposition = SVGSymbol.padding + (i * SVGSymbol.vgap);
+		for (var i = 0; i < (SVGSymbol.isMobile ? 1 : SVGSymbol.struct.length); i++) {
+			var line = SVGSymbol.struct[i];
+			var yposition = SVGSymbol.padding + (i * SVGSymbol.vgap);
 
-				for (var j = 0; j < line.length; j++) {
-					var cell = line[j];
-					var xposition = SVGSymbol.padding + (j * SVGSymbol.hgap);
-					
-					SVGSymbol.points.push({
-						xposition,
-						yposition,
-						size: (cell == 1 
-							? SVGSymbol.largePointRadius + _.random(-SVGSymbol.variance, SVGSymbol.variance)
-							: SVGSymbol.smallPointRadius)
-					});
-				}
+			for (var j = 0; j < line.length; j++) {
+				var cell = line[j];
+				var xposition = SVGSymbol.padding + (j * SVGSymbol.hgap);
+				
+				SVGSymbol.points.push({
+					xposition,
+					yposition,
+					size: (cell == 1 
+						? SVGSymbol.largePointRadius + _.random(-SVGSymbol.variance, SVGSymbol.variance)
+						: SVGSymbol.smallPointRadius)
+				});
 			}
-
-			SVGSymbol.points = _.shuffle(SVGSymbol.points);
-
-			var task = setInterval(function() {
-				if (SVGSymbol.points.length > 0) {
-					var point = SVGSymbol.points.pop();
-					
-					SVGSymbol._svg.circle(point.xposition, point.yposition, 0).animate({
-						r: point.size
-					}, SVGSymbol.animateAppearTime);
-				} else {
-					clearInterval(task);
-				}
-			}, SVGSymbol.animateDelay);
 		}
+
+		SVGSymbol.points = _.shuffle(SVGSymbol.points);
+
+		var task = setInterval(function() {
+			if (SVGSymbol.points.length > 0) {
+				var point = SVGSymbol.points.pop();
+				
+				SVGSymbol._svg.circle(point.xposition, point.yposition, 0).animate({
+					r: point.size
+				}, SVGSymbol.animateAppearTime);
+			} else {
+				clearInterval(task);
+			}
+		}, SVGSymbol.animateDelay);
 	}
 };
 
@@ -186,14 +183,10 @@ $(document).ready(function() {
 			closeOnContentClick: true,
 			showCloseBtn: false,
 			gallery: {
-				enabled: true
+				enabled: false
 			},
 			zoom: {
-				enabled: true,
-				duration: 300,
-				opener: function(openerElement) {
-					return openerElement.is('img') ? openerElement : openerElement.find('img');
-				}
+				enabled: false
 			}
 		});
 	});
